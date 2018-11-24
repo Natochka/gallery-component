@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { array } from 'prop-types'
 import { fetchData } from '../actions/gallery'
+import Grid from '@material-ui/core/Grid'
+import Card from '../components/Card'
+
+const SPACING = 16
 
 class Gallery extends Component {
   componentDidMount() {
@@ -10,7 +14,21 @@ class Gallery extends Component {
   }
   render() {
     console.log('props', this.props)
-    return <div>Gallery view</div>
+    const { photos } = this.props
+    return (
+      <Grid container spacing={16}>
+        <Grid item xs={12}>
+          <Grid container justify="center" spacing={SPACING}>
+            {photos &&
+              photos.map(item => (
+                <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
+                  <Card item={item} />
+                </Grid>
+              ))}
+          </Grid>
+        </Grid>
+      </Grid>
+    )
   }
 }
 
@@ -19,7 +37,6 @@ Gallery.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log(state)
   return {
     photos: state.gallery.photo
   }

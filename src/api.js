@@ -14,3 +14,6 @@ export const getFlickrData = ({ text = 'dogs', ...rest } = {}) =>
     })
     .then(res => ((res || {}).data || {}).photos)
     .catch(error => console.log(error) || error)
+
+export const getPhotoSrc = ({ farm, server, id, secret }) =>
+  `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_n.jpg`
