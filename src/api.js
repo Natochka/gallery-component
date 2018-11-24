@@ -9,7 +9,10 @@ export const getFlickrData = ({ text = 'dogs', ...rest } = {}) =>
         method: 'flickr.photos.search',
         api_key: 'a621ac90c3f5e20b92fd638c2b540f6c',
         format: 'json',
-        nojsoncallback: 1
+        nojsoncallback: 1,
+        media: 'photos',
+        content_type: 1,
+        extras: 'owner_name,date_upload,geo,tags,description'
       }
     })
     .then(res => ((res || {}).data || {}).photos)
