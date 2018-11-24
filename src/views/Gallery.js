@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { array } from 'prop-types'
 import { fetchData } from '../actions/gallery'
 
-function Gallery() {
-  return <div>Gallery view</div>
+class Gallery extends Component {
+  componentDidMount() {
+    const { fetchData } = this.props
+    fetchData && fetchData()
+  }
+  render() {
+    console.log('props', this.props)
+    return <div>Gallery view</div>
+  }
 }
 
 Gallery.propTypes = {
-  data: array
+  photos: array
 }
 
 const mapStateToProps = (state, props) => {
+  console.log(state)
   return {
-    data: state.gallery.data
+    photos: state.gallery.photo
   }
 }
 
