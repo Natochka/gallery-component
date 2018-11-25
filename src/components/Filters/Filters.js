@@ -7,7 +7,7 @@ import Author from '../Author'
 const styles = {
   root: {
     display: 'flex',
-    flexWrap: 'wrap'
+    padding: '0 20px 20px'
   }
 }
 
