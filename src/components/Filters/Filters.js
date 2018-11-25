@@ -2,6 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Tags from './Tags'
 import Licenses from './Licenses'
+import Author from '../Author'
 
 const styles = {
   root: {
@@ -15,6 +16,7 @@ function Filters({ classes }) {
     <div className={classes.root}>
       <Tags />
       <Licenses />
+      <Author />
     </div>
   )
 }

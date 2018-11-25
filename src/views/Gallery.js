@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { array, bool } from 'prop-types'
+import { array, bool, func } from 'prop-types'
 import Observer from 'react-intersection-observer'
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { fetchData, resetData, fetchAuthorPhotos } from '../actions/gallery'
+import { fetchData } from '../actions/gallery'
+import { changeAuthor } from '../actions/filters'
 import Filters from '../components/Filters'
 import Card from '../components/Card'
 
@@ -40,15 +41,12 @@ class Gallery extends Component {
     inView && !isLoading && fetchData()
   }
 
-  handleAuthorClick = id => () => {
-    const { resetData, fetchAuthorPhotos } = this.props
-    this.setState({ isLoading: true })
-    resetData()
-    fetchAuthorPhotos(id).then(() => this.setState({ isLoading: false }))
+  handleAuthorClick = ({ owner, ownername }) => () => {
+    const { changeAuthor } = this.props
+    changeAuthor({ owner, ownername })
   }
 
   render() {
-    console.log('props', this.props)
     const { photos, classes, isLastPage } = this.props
     return (
       <Grid container spacing={16}>
@@ -58,7 +56,7 @@ class Gallery extends Component {
             {photos &&
               photos.map(item => (
                 <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
-                  <Card item={item} onAuthorClick={this.handleAuthorClick(item.owner)} />
+                  <Card item={item} onAuthorClick={this.handleAuthorClick(item)} />
                 </Grid>
               ))}
             {!isLastPage && (
@@ -79,7 +77,9 @@ class Gallery extends Component {
 
 Gallery.propTypes = {
   photos: array,
-  isLastPage: bool
+  isLastPage: bool,
+  changeAuthor: func,
+  fetchData: func
 }
 
 const mapStateToProps = state => {
@@ -89,12 +89,9 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchData: () => dispatch(fetchData()),
-    resetData: () => dispatch(resetData()),
-    fetchAuthorPhotos: user_id => dispatch(fetchAuthorPhotos(user_id))
-  }
+const mapDispatchToProps = {
+  fetchData,
+  changeAuthor
 }
 
 export default connect(

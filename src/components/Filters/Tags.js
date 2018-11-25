@@ -41,7 +41,6 @@ class Tags extends Component {
 
   render() {
     const { classes } = this.props
-    const hasDelete = this.props.tags.length > 1
 
     return (
       <Grid item xs={12}>
@@ -59,7 +58,7 @@ class Tags extends Component {
             className={classes.chip}
             key={item}
             label={item}
-            onDelete={hasDelete ? this.handleDelete(item) : undefined}
+            onDelete={this.handleDelete(item)}
           />
         ))}
       </Grid>

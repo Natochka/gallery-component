@@ -7,13 +7,15 @@ export const resetData = createAction('RESET_DATA')
 export const fetchData = () => async (dispatch, getState) => {
   const {
     gallery: { page },
-    filters: { tags, ...rest }
+    filters: { tags, author, ...rest }
   } = getState()
 
   const stringTags = tags.join(',')
+  const user_id = (author || {}).owner
 
   const data = await getFlickrData({
     ...rest,
+    user_id,
     tags: stringTags,
     page: page // @TODO + 1
   })
