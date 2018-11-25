@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { fetchData, resetData, fetchAuthorPhotos } from '../actions/gallery'
+import Filters from '../components/Filters'
 import Card from '../components/Card'
 
 const SPACING = 16
@@ -51,6 +52,7 @@ class Gallery extends Component {
     const { photos, classes, isLastPage } = this.props
     return (
       <Grid container spacing={16}>
+        <Filters />
         <Grid className={classes.wrapper} item xs={12}>
           <Grid container justify="center" spacing={SPACING}>
             {photos &&

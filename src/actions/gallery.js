@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions'
 import { getFlickrData } from '../api'
 
 export const getData = createAction('GET_DATA')
-export const resetData = createAction('REST_DATA')
+export const resetData = createAction('RESET_DATA')
 
 export const fetchData = () => async (dispatch, getState) => {
   const {
