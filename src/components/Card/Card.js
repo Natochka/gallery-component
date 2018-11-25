@@ -21,6 +21,9 @@ const styles = {
   },
   infoWrapper: {
     justifyContent: 'space-between'
+  },
+  tags: {
+    marginTop: '10px'
   }
 }
 
@@ -49,6 +52,10 @@ function CardComponent({ item, classes, onAuthorClick }) {
         </Typography>
         <Typography className={classes.cardDescription} component="p">
           {item.description._content}
+        </Typography>
+        <Typography component="p" className={classes.tags}>
+          <strong>Tags: </strong>
+          {item.tags}
         </Typography>
       </CardContent>
     </Card>
