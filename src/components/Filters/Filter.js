@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { array, string } from 'prop-types'
+import { array, string, func } from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Select from '@material-ui/core/Select'
 import Input from '@material-ui/core/Input'
@@ -22,6 +22,7 @@ class Filter extends PureComponent {
 
   handleChange = e => {
     this.setState({ inputValue: e.target.value })
+    this.props.onChange(e.target.value)
   }
 
   render() {
@@ -30,14 +31,10 @@ class Filter extends PureComponent {
     return (
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="select-multiple">{name}</InputLabel>
-        <Select
-          value={inputValue}
-          onChange={this.handleChange}
-          input={<Input id="select-multiple" />}
-        >
+        <Select value={inputValue} onChange={this.handleChange} input={<Input />}>
           {data &&
             data.map(item => (
-              <MenuItem key={item.id} value={item.name}>
+              <MenuItem key={item.id} value={item.id}>
                 {item.name}
               </MenuItem>
             ))}
@@ -49,7 +46,8 @@ class Filter extends PureComponent {
 
 Filter.propTypes = {
   data: array,
-  name: string
+  name: string,
+  onChange: func
 }
 
 export default withStyles(styles)(Filter)

@@ -1,10 +1,20 @@
 import { createAction } from 'redux-actions'
-import { getLicensesData } from '../api'
 
-export const getLicenses = createAction('GET_LICENSES')
 export const resetFilters = createAction('RESET_FILTERS')
+export const mergeTag = createAction('MERGE_TAG')
+export const removeTag = createAction('REMOVE_TAG')
+export const changeLicense = createAction('CHANGE_LICENSE')
 
-export const fetchLicenses = () => async dispatch => {
-  const data = await getLicensesData()
-  dispatch(getLicenses(data))
+export const changeTags = tag => (dispatch, getState) => {
+  if (!tag) return
+
+  const {
+    filters: { tags }
+  } = getState()
+
+  if (tags.includes(tag) && tags.length > 1) {
+    dispatch(removeTag(tag))
+  } else if (!tags.includes(tag)) {
+    dispatch(mergeTag(tag))
+  }
 }

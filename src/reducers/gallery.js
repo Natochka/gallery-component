@@ -10,8 +10,8 @@ export default handleActions(
   {
     [getData]: (state, action) => ({
       ...state,
-      ...action.payload,
-      photo: [...state.photo, ...action.payload.photo]
+      ...action.payload
+      // photo: [...state.photo, ...action.payload.photo]
     }),
     [resetData]: () => ({
       ...initialState

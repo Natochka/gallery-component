@@ -6,9 +6,17 @@ export const resetData = createAction('RESET_DATA')
 
 export const fetchData = () => async (dispatch, getState) => {
   const {
-    gallery: { page }
+    gallery: { page },
+    filters: { tags, ...rest }
   } = getState()
-  const data = await getFlickrData({ tags: 'dogs', page: page + 1 })
+
+  const stringTags = tags.join(',')
+
+  const data = await getFlickrData({
+    ...rest,
+    tags: stringTags,
+    page: page // @TODO + 1
+  })
   dispatch(getData(data))
 }
 
