@@ -5,7 +5,8 @@ export default handleAction(
   [getData],
   (state, action) => ({
     ...state,
-    ...action.payload
+    ...action.payload,
+    photo: [...state.photo, ...action.payload.photo]
   }),
-  {}
+  { photo: [], page: 0 }
 )
