@@ -19,6 +19,8 @@ export const changeTags = tag => (dispatch, getState) => {
   } else {
     dispatch(mergeTag(tag))
   }
+
+  return dispatch(fetchData())
 }
 
 export const changeAuthor = param => dispatch => {

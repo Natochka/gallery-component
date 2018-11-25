@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { fetchData } from '../actions/gallery'
-import { changeAuthor } from '../actions/filters'
 import Filters from '../components/Filters'
 import Card from '../components/Card'
 
@@ -41,11 +40,6 @@ class Gallery extends Component {
     inView && !isLoading && fetchData()
   }
 
-  handleAuthorClick = ({ owner, ownername }) => () => {
-    const { changeAuthor } = this.props
-    changeAuthor({ owner, ownername })
-  }
-
   render() {
     const { photos, classes, isLastPage } = this.props
     return (
@@ -56,7 +50,7 @@ class Gallery extends Component {
             {photos &&
               photos.map(item => (
                 <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
-                  <Card item={item} onAuthorClick={this.handleAuthorClick(item)} />
+                  <Card item={item} />
                 </Grid>
               ))}
             {!isLastPage && (
@@ -90,8 +84,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  fetchData,
-  changeAuthor
+  fetchData
 }
 
 export default connect(
