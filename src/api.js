@@ -1,11 +1,10 @@
 import axios from 'axios'
 
-export const getFlickrData = ({ tags = 'dogs', ...rest } = {}) =>
+export const getFlickrData = (params = {}) =>
   axios
     .get('https://api.flickr.com/services/rest/', {
       params: {
-        ...rest,
-        tags,
+        ...params,
         method: 'flickr.photos.search',
         api_key: 'a621ac90c3f5e20b92fd638c2b540f6c',
         format: 'json',

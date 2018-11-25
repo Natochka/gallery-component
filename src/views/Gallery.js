@@ -5,7 +5,7 @@ import Observer from 'react-intersection-observer'
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { fetchData } from '../actions/gallery'
+import { fetchData, resetData, fetchAuthorPhotos } from '../actions/gallery'
 import Card from '../components/Card'
 
 const SPACING = 16
@@ -39,6 +39,13 @@ class Gallery extends Component {
     inView && !isLoading && fetchData()
   }
 
+  handleAuthorClick = id => () => {
+    const { resetData, fetchAuthorPhotos } = this.props
+    this.setState({ isLoading: true })
+    resetData()
+    fetchAuthorPhotos(id).then(() => this.setState({ isLoading: false }))
+  }
+
   render() {
     console.log('props', this.props)
     const { photos, classes, isLastPage } = this.props
@@ -49,7 +56,7 @@ class Gallery extends Component {
             {photos &&
               photos.map(item => (
                 <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
-                  <Card item={item} />
+                  <Card item={item} onAuthorClick={this.handleAuthorClick(item.owner)} />
                 </Grid>
               ))}
             {!isLastPage && (
@@ -82,7 +89,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: () => dispatch(fetchData())
+    fetchData: () => dispatch(fetchData()),
+    resetData: () => dispatch(resetData()),
+    fetchAuthorPhotos: user_id => dispatch(fetchAuthorPhotos(user_id))
   }
 }
 

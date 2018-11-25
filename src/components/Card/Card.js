@@ -1,5 +1,5 @@
 import React from 'react'
-import { object } from 'prop-types'
+import { object, func } from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import Grid from '@material-ui/core/Grid'
@@ -26,7 +26,7 @@ const styles = {
 
 const transformDate = date => new Date(Number(date + '000')).toLocaleDateString()
 
-function CardComponent({ item, classes }) {
+function CardComponent({ item, classes, onAuthorClick }) {
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -39,7 +39,9 @@ function CardComponent({ item, classes }) {
       />
       <CardContent>
         <Grid container className={classes.infoWrapper}>
-          <Typography component="p">{item.ownername}</Typography>
+          <Typography component="p" onClick={onAuthorClick}>
+            {item.ownername}
+          </Typography>
           <Typography component="p">{transformDate(item.dateupload)}</Typography>
         </Grid>
         <Typography gutterBottom variant="h5" component="h2">
@@ -54,7 +56,8 @@ function CardComponent({ item, classes }) {
 }
 
 CardComponent.propTypes = {
-  item: object
+  item: object,
+  onAuthorClick: func
 }
 
 export default withStyles(styles)(CardComponent)
