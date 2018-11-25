@@ -20,6 +20,8 @@ const styles = {
   }
 }
 
+const transformDate = date => new Date(Number(date + '000')).toLocaleDateString()
+
 function CardComponent({ item, classes }) {
   return (
     <Card className={classes.card}>
@@ -32,6 +34,7 @@ function CardComponent({ item, classes }) {
         title={item.title}
       />
       <CardContent>
+        <Typography component="p">{transformDate(item.dateupload)}</Typography>
         <Typography gutterBottom variant="h5" component="h2">
           {item.title}
         </Typography>
