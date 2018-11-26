@@ -19,6 +19,7 @@ const styles = theme => ({
     alignItems: 'center'
   },
   progress: {
+    flex: '1 1 100%',
     textAlign: 'center',
     padding: '20px 0'
   }
