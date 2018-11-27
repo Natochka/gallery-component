@@ -43,7 +43,7 @@ class Tags extends Component {
     const { classes } = this.props
 
     return (
-      <Grid item xs={12}>
+      <Grid item>
         <form autoComplete="off" noValidate onSubmit={this.handleSubmit}>
           <TextField
             id="tags"

@@ -32,6 +32,7 @@ class Filter extends PureComponent {
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="select-multiple">{name}</InputLabel>
         <Select value={inputValue} onChange={this.handleChange} input={<Input />}>
+          <MenuItem value="">Any</MenuItem>
           {data &&
             data.map(item => (
               <MenuItem key={item.id} value={item.id}>
