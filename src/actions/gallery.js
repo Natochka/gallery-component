@@ -2,32 +2,32 @@ import { createAction } from 'redux-actions'
 import { getFlickrData } from '../api'
 
 export const getData = createAction('GET_DATA')
+export const mergeData = createAction('MERGE_DATA')
 export const resetData = createAction('RESET_DATA')
 export const changeLoading = createAction('CHANGE_LOADING')
 
-export const fetchData = () => async (dispatch, getState) => {
+export const fetchData = loadMore => async (dispatch, getState) => {
   const {
-    gallery: { page, isLoading },
+    gallery: { page },
     filters: { tags, author, ...rest }
   } = getState()
 
   const stringTags = tags.join(',')
   const user_id = (author || {}).owner
 
+  if (!loadMore) dispatch(resetData())
   dispatch(changeLoading(true))
-
-  console.log('isLoading', isLoading)
-
   const data = await getFlickrData({
     ...rest,
     user_id,
     tags: stringTags,
-    page: page // @TODO + 1
+    page: loadMore ? page + 1 : page
   })
-  dispatch(getData(data))
+
+  if (loadMore) dispatch(mergeData(data))
+  else dispatch(getData(data))
 
   dispatch(changeLoading(false))
-  console.log('isLoading', isLoading)
 }
 
 export const fetchAuthorPhotos = user_id => async (dispatch, getState) => {

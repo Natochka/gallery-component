@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
-import { getData, resetData, changeLoading } from '../actions/gallery'
+import uniqBy from 'lodash/uniqBy'
+import { getData, mergeData, resetData, changeLoading } from '../actions/gallery'
 
 const initialState = {
   photo: [],
@@ -12,7 +13,11 @@ export default handleActions(
     [getData]: (state, action) => ({
       ...state,
       ...action.payload
-      // photo: [...state.photo, ...action.payload.photo]
+    }),
+    [mergeData]: (state, action) => ({
+      ...state,
+      ...action.payload,
+      photo: uniqBy([...state.photo, ...action.payload.photo], 'id')
     }),
     [changeLoading]: (state, action) => ({
       ...state,

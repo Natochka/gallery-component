@@ -36,18 +36,17 @@ class Gallery extends Component {
 
   loadMorePhotos = inView => {
     const { fetchData, isLoading } = this.props
-    inView && !isLoading && fetchData()
+    inView && !isLoading && fetchData(true)
   }
 
   render() {
-    const { photos, classes, isLastPage, isLoading } = this.props
+    const { photos, classes, isLastPage } = this.props
     return (
       <Grid className={classes.container} container spacing={SPACING}>
         <Filters />
         <Grid item xs={12}>
           <Grid container spacing={SPACING}>
             {photos &&
-              !isLoading &&
               photos.map(item => (
                 <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
                   <Card item={item} />
