@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions'
 import { getFlickrData } from '../api'
+import { setError } from './errors'
 
 export const getData = createAction('GET_DATA')
 export const mergeData = createAction('MERGE_DATA')
@@ -25,6 +26,7 @@ export const fetchData = loadMore => async (dispatch, getState) => {
   })
 
   if (loadMore) dispatch(mergeData(data))
+  else if (!data.photo.length) dispatch(setError('Ups, pusto :('))
   else dispatch(getData(data))
 
   dispatch(changeLoading(false))

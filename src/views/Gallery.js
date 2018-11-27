@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { fetchData } from '../actions/gallery'
 import Filters from '../components/Filters'
 import Card from '../components/Card'
+import Error from '../components/Error'
 
 const SPACING = 16
 
@@ -40,29 +41,33 @@ class Gallery extends Component {
   }
 
   render() {
-    const { photos, classes, isLastPage } = this.props
+    const { photos, classes, isLastPage, hasError } = this.props
     return (
       <Grid className={classes.container} container spacing={SPACING}>
         <Filters />
-        <Grid item xs={12}>
-          <Grid container spacing={SPACING}>
-            {photos &&
-              photos.map(item => (
-                <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
-                  <Card item={item} />
-                </Grid>
-              ))}
-            {!isLastPage && (
-              <Observer onChange={this.loadMorePhotos}>
-                {({ ref }) => (
-                  <div ref={ref} className={classes.progress}>
-                    <CircularProgress disableShrink />
-                  </div>
-                )}
-              </Observer>
-            )}
+        {hasError ? (
+          <Error />
+        ) : (
+          <Grid item xs={12}>
+            <Grid container spacing={SPACING}>
+              {photos &&
+                photos.map(item => (
+                  <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
+                    <Card item={item} />
+                  </Grid>
+                ))}
+              {!isLastPage && (
+                <Observer onChange={this.loadMorePhotos}>
+                  {({ ref }) => (
+                    <div ref={ref} className={classes.progress}>
+                      <CircularProgress disableShrink />
+                    </div>
+                  )}
+                </Observer>
+              )}
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
     )
   }
@@ -72,14 +77,16 @@ Gallery.propTypes = {
   photos: array,
   isLastPage: bool,
   changeAuthor: func,
-  fetchData: func
+  fetchData: func,
+  hasError: bool
 }
 
 const mapStateToProps = state => {
   return {
     photos: state.gallery.photo,
     isLoading: state.gallery.isLoading,
-    isLastPage: state.gallery.page === state.gallery.pages
+    isLastPage: state.gallery.page === state.gallery.pages,
+    hasError: !!state.errors.message
   }
 }
 
