@@ -21,34 +21,33 @@ const styles = theme => ({
   progress: {
     flex: '1 1 100%',
     textAlign: 'center',
-    padding: '20px 0'
+    padding: SPACING
+  },
+  container: {
+    padding: SPACING
   }
 })
 
 class Gallery extends Component {
-  state = {
-    isLoading: true
-  }
-
   componentDidMount() {
     const { fetchData } = this.props
-    fetchData && fetchData().then(() => this.setState({ isLoading: false }))
+    fetchData && fetchData()
   }
 
   loadMorePhotos = inView => {
-    const { fetchData } = this.props
-    const { isLoading } = this.state
+    const { fetchData, isLoading } = this.props
     inView && !isLoading && fetchData()
   }
 
   render() {
-    const { photos, classes, isLastPage } = this.props
+    const { photos, classes, isLastPage, isLoading } = this.props
     return (
-      <Grid container spacing={16}>
+      <Grid className={classes.container} container spacing={SPACING}>
         <Filters />
-        <Grid className={classes.wrapper} item xs={12}>
-          <Grid container justify="center" spacing={SPACING}>
+        <Grid item xs={12}>
+          <Grid container spacing={SPACING}>
             {photos &&
+              !isLoading &&
               photos.map(item => (
                 <Grid xs={12} sm={6} md={4} lg={3} key={item.id} item>
                   <Card item={item} />
@@ -80,6 +79,7 @@ Gallery.propTypes = {
 const mapStateToProps = state => {
   return {
     photos: state.gallery.photo,
+    isLoading: state.gallery.isLoading,
     isLastPage: state.gallery.page === state.gallery.pages
   }
 }

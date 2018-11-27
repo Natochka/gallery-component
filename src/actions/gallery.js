@@ -3,15 +3,20 @@ import { getFlickrData } from '../api'
 
 export const getData = createAction('GET_DATA')
 export const resetData = createAction('RESET_DATA')
+export const changeLoading = createAction('CHANGE_LOADING')
 
 export const fetchData = () => async (dispatch, getState) => {
   const {
-    gallery: { page },
+    gallery: { page, isLoading },
     filters: { tags, author, ...rest }
   } = getState()
 
   const stringTags = tags.join(',')
   const user_id = (author || {}).owner
+
+  dispatch(changeLoading(true))
+
+  console.log('isLoading', isLoading)
 
   const data = await getFlickrData({
     ...rest,
@@ -20,6 +25,9 @@ export const fetchData = () => async (dispatch, getState) => {
     page: page // @TODO + 1
   })
   dispatch(getData(data))
+
+  dispatch(changeLoading(false))
+  console.log('isLoading', isLoading)
 }
 
 export const fetchAuthorPhotos = user_id => async (dispatch, getState) => {

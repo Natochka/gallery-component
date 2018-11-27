@@ -10,6 +10,10 @@ import { changeTags } from '../../actions/filters'
 const styles = theme => ({
   chip: {
     margin: `0 ${theme.spacing.unit / 4}px`
+  },
+  input: {
+    width: '100%',
+    marginBottom: 10
   }
 })
 
@@ -43,11 +47,12 @@ class Tags extends Component {
     const { classes } = this.props
 
     return (
-      <Grid item>
+      <>
         <form autoComplete="off" noValidate onSubmit={this.handleSubmit}>
           <TextField
             id="tags"
             label="Tags"
+            className={classes.input}
             value={this.state.value}
             onChange={this.handleChange}
             margin="normal"
@@ -61,7 +66,7 @@ class Tags extends Component {
             onDelete={this.handleDelete(item)}
           />
         ))}
-      </Grid>
+      </>
     )
   }
 }

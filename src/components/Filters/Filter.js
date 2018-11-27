@@ -9,7 +9,6 @@ import FormControl from '@material-ui/core/FormControl'
 
 const styles = {
   formControl: {
-    margin: '16px 25px',
     minWidth: 120,
     maxWidth: 300
   }

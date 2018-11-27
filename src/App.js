@@ -3,7 +3,7 @@ import Gallery from './views/Gallery'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Gallery />
     </div>
   )
