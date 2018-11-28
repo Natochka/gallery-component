@@ -16,11 +16,12 @@ const styles = {
     height: '100%'
   },
   cardMedia: {
-    objectFit: 'cover'
+    objectFit: 'cover',
+    backgroundColor: '#cdcdcd'
   },
   cardDescription: {
     overflowY: 'auto',
-    maxHeight: 150
+    maxHeight: 275
   },
   infoWrapper: {
     justifyContent: 'space-between'
@@ -29,7 +30,10 @@ const styles = {
     marginTop: '10px'
   },
   tagButton: {
-    margin: '4px'
+    margin: 1,
+    minWidth: 0,
+    minHeight: 0,
+    padding: 4
   },
   button: {
     padding: 0,
@@ -56,11 +60,11 @@ function CardComponent({ item, classes, filterTags, changeAuthor, changeTags }) 
         className={classes.cardMedia}
         component="img"
         alt={item.title}
-        height="150"
+        height="200"
         image={getPhotoSrc(item)}
         title={item.title}
       />
-      <CardContent>
+      <CardContent className={classes.cardDescription}>
         <Grid container className={classes.infoWrapper}>
           <Button className={classes.button} onClick={handleChangeAuthor}>
             {item.ownername}
@@ -70,16 +74,13 @@ function CardComponent({ item, classes, filterTags, changeAuthor, changeTags }) 
         <Typography gutterBottom variant="h5" component="h2">
           {item.title}
         </Typography>
-        <Typography className={classes.cardDescription} component="p">
-          {item.description._content}
-        </Typography>
+        <Typography component="p" dangerouslySetInnerHTML={{ __html: item.description._content }} />
         <Typography component="p" className={classes.tags}>
           <strong>Tags: </strong>
           {item.tags.split(' ').map(el => (
             <Button
               onClick={handleTagClick(el)}
               key={el}
-              variant="outlined"
               size="small"
               disabled={filterTags.includes(el)}
               className={classes.tagButton}
