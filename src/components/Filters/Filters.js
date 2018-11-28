@@ -12,7 +12,10 @@ const styles = {
     flex: '1',
     padding: 8
   },
-
+  offline: {
+    pointerEvents: 'none',
+    opacity: 0.25
+  },
   paper: {
     padding: 16,
     flex: 1,
@@ -20,9 +23,9 @@ const styles = {
   }
 }
 
-function Filters({ classes }) {
+function Filters({ classes, isOnline }) {
   return (
-    <Grid container className={classes.root} spacing={16}>
+    <Grid container className={(classes.root, !isOnline && classes.offline)} spacing={16}>
       <Grid item xs={12} sm={9}>
         <Paper elevation={1} className={classes.paper}>
           <Grid container wrap="wrap" spacing={16}>

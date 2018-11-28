@@ -11,6 +11,7 @@ import Card from '../components/Card'
 import Error from '../components/Error'
 
 const SPACING = 16
+const isOnline = typeof navigator !== 'undefined' && navigator.onLine
 
 const styles = theme => ({
   wrapper: {
@@ -41,10 +42,10 @@ class Gallery extends Component {
   }
 
   render() {
-    const { photos, classes, isLastPage, hasError } = this.props
+    const { photos, classes, showLoader, hasError } = this.props
     return (
       <Grid className={classes.container} container spacing={SPACING}>
-        <Filters />
+        <Filters isOnline={isOnline} />
         {hasError ? (
           <Error />
         ) : (
@@ -56,7 +57,7 @@ class Gallery extends Component {
                     <Card item={item} />
                   </Grid>
                 ))}
-              {!isLastPage && (
+              {showLoader && (
                 <Observer onChange={this.loadMorePhotos}>
                   {({ ref }) => (
                     <div ref={ref} className={classes.progress}>
@@ -75,7 +76,7 @@ class Gallery extends Component {
 
 Gallery.propTypes = {
   photos: array,
-  isLastPage: bool,
+  showLoader: bool,
   changeAuthor: func,
   fetchData: func,
   hasError: bool
@@ -85,7 +86,7 @@ const mapStateToProps = state => {
   return {
     photos: state.gallery.photo,
     isLoading: state.gallery.isLoading,
-    isLastPage: state.gallery.page === state.gallery.pages,
+    showLoader: state.gallery.page !== state.gallery.pages && isOnline,
     hasError: !!state.errors.message
   }
 }
