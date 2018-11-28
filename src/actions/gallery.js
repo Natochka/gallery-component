@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions'
 import { getFlickrData } from '../api'
-import { setError } from './errors'
+import { setError, clearError } from './errors'
 
 export const getData = createAction('GET_DATA')
 export const mergeData = createAction('MERGE_DATA')
@@ -8,6 +8,8 @@ export const resetData = createAction('RESET_DATA')
 export const changeLoading = createAction('CHANGE_LOADING')
 
 export const fetchData = loadMore => async (dispatch, getState) => {
+  dispatch(clearError())
+
   const {
     gallery: { page },
     filters: { tags, author, ...rest }
