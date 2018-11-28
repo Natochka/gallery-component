@@ -12,11 +12,12 @@ export const fetchData = loadMore => async (dispatch, getState) => {
 
   const {
     gallery: { page },
-    filters: { tags, author, ...rest }
+    filters: { tags, author, sort, ...rest }
   } = getState()
 
   const stringTags = tags.join(',')
   const user_id = (author || {}).owner
+  const sortString = `date-posted-${sort}`
 
   if (!loadMore) dispatch(resetData())
   dispatch(changeLoading(true))
@@ -24,6 +25,7 @@ export const fetchData = loadMore => async (dispatch, getState) => {
     ...rest,
     user_id,
     tags: stringTags,
+    sort: sortString,
     page: loadMore ? page + 1 : page
   })
 

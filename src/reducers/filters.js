@@ -1,9 +1,17 @@
 import { handleActions } from 'redux-actions'
-import { resetFilters, mergeTag, removeTag, changeLicense, setAuthor } from '../actions/filters'
+import {
+  resetFilters,
+  mergeTag,
+  removeTag,
+  changeLicense,
+  setAuthor,
+  setSort
+} from '../actions/filters'
 
 const initialState = {
   tags: ['dogs'],
   license: '',
+  sort: 'desc',
   author: null
 }
 
@@ -20,6 +28,10 @@ export default handleActions(
     [changeLicense]: (state, action) => ({
       ...state,
       license: action.payload
+    }),
+    [setSort]: (state, action) => ({
+      ...state,
+      sort: action.payload
     }),
     [setAuthor]: (state, action) => ({
       ...state,
