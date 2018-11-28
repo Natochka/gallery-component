@@ -1,5 +1,6 @@
 {
-  "short_name": "Flickr Gallery",
+  "short_name": "Gallery",
+  "description": "Test Flickr Gallery description",
   "name": "Flickr Gallery",
   "icons": [
     {
